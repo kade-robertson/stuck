@@ -54,14 +54,8 @@ def process(prog):
             str_lit += char
         if is_debug:
             print 'Char:',char,'|','Stack:',`stack`
-    o = []
-    for item in stack:
-        if type(item) is float or type(item) is int and int(item) == item: o += [int(item)]
-        elif type(item) is float and float(item) == item: o += [float(item)]
-        elif type(item) is str: o += [item.replace("''",'"')]
-        elif type(item) is list: o += [item]
-    if is_debug: print 'Stack:',`o`
-    print ''.join(map(str,o))
+    if is_debug: print 'Stack:',`stack`
+    print ''.join(map(str,stack))
         
 
 def main():

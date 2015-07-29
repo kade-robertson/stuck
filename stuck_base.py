@@ -27,11 +27,16 @@ def flt_(s):
     l = s.pop(-1)
     while l:
         s += [l.pop(0)]
-
+def trn_(s):
+    c = s.pop(-3)
+    t,f = s.pop(-2),s.pop()
+    if c: s += [t]
+    else: s += [f]
+        
 CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
          '/' : div_, '%' : mod_, '^' : pwr_,
          '#' : sqr_, '\\': sqt_, 'i' : inp_,
          ';' : pls_, ',' : pal_, '>' : gth_,
          '<' : lth_, '=' : eql_, '{' : bsl_,
          '}' : bsr_, 'l' : inl_, '~' : flt_,
-         's' : ins_ }
+         's' : ins_, '?' : trn_ }

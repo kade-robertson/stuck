@@ -19,6 +19,7 @@ def sqt_(s): s += [s.pop()**0.5]
 def inp_(s): s += [float(input())]
 def inl_(s): s += [input()]
 def ins_(s): s += [raw_input()]
+def itk_(s): s += [eval(x) for x in raw_input().split('|')]
 def pls_(s): s.pop()
 def pal_(s):
     while len(s)>1:
@@ -32,6 +33,9 @@ def trn_(s):
     t,f = s.pop(-2),s.pop()
     if c: s += [t]
     else: s += [f]
+def swp_(s):
+    a,b = s.pop(-2),s.pop()
+    s += [b] + [a]
         
 CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
          '/' : div_, '%' : mod_, '^' : pwr_,
@@ -39,4 +43,5 @@ CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
          ';' : pls_, ',' : pal_, '>' : gth_,
          '<' : lth_, '=' : eql_, '{' : bsl_,
          '}' : bsr_, 'l' : inl_, '~' : flt_,
-         's' : ins_, '?' : trn_ }
+         's' : ins_, '?' : trn_, 'r' : itk_,
+         ';' : swp_ }

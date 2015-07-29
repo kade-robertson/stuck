@@ -14,6 +14,8 @@ def process(prog):
     stack = []
     num_lit   = ''
     num_lit_a = False
+    str_lit   = ''
+    str_lit_a = False
     is_debug  = False
     if prog[-2:] == '-d':
         prog = prog[:-2]
@@ -21,35 +23,44 @@ def process(prog):
     if prog[-1] in allnums:
         prog += ' '
     for char in prog:
-        if char in stuck_math.CMDS:
+        if char in stuck_math.CMDS and not str_lit_a:
             if num_lit_a == True:
                 stack += [float(num_lit)]
                 num_lit = ''
                 num_lit_a = False
             stuck_math.CMDS[char](stack)
-        elif char in stuck_base.CMDS:
+        elif char in stuck_base.CMDS and not str_lit_a:
             if num_lit_a == True:
                 stack += [float(num_lit)]
                 num_lit = ''
                 num_lit_a = False
             stuck_base.CMDS[char](stack)
-        elif char == ' ':
+        elif char == ' ' and not str_lit_a:
             if num_lit_a == True:
                 stack += [float(num_lit)]
                 num_lit = ''
                 num_lit_a = False
-        elif char in allnums:
+        elif char == '"':
+            if str_lit_a:
+                stack += [str_lit]
+                str_lit = ''
+                str_lit_a = False
+            else:
+                str_lit_a = True
+        elif char in allnums and not str_lit_a:
             num_lit_a = True
             num_lit  += char
+        else:
+            str_lit += char
         if is_debug:
             print 'Char:',char,'|','Stack:',`stack`
     o = []
     for item in stack:
-        if type(item) is not list and int(item) == item: o += [int(item)]
-        elif type(item) is not list and float(item) == item: o += [float(item)]
-        elif type(item) is not list and str(item) == item: o += [str(item)]
+        if type(item) is float or type(item) is int and int(item) == item: o += [int(item)]
+        elif type(item) is float and float(item) == item: o += [float(item)]
+        elif type(item) is str: o += [item.replace("''",'"')]
         elif type(item) is list: o += [item]
-    print 'Stack:',`o`
+    if is_debug: print 'Stack:',`o`
     print ''.join(map(str,o))
         
 

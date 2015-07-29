@@ -18,6 +18,7 @@ def sqr_(s): s += [s.pop()**2]
 def sqt_(s): s += [s.pop()**0.5]
 def inp_(s): s += [float(input())]
 def inl_(s): s += [input()]
+def ins_(s): s += [raw_input()]
 def pls_(s): s.pop()
 def pal_(s):
     while len(s)>1:
@@ -32,4 +33,5 @@ CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
          '#' : sqr_, '\\': sqt_, 'i' : inp_,
          ';' : pls_, ',' : pal_, '>' : gth_,
          '<' : lth_, '=' : eql_, '{' : bsl_,
-         '}' : bsr_, 'l' : inl_, '~' : flt_ }
+         '}' : bsr_, 'l' : inl_, '~' : flt_,
+         's' : ins_ }

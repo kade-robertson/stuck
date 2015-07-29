@@ -7,8 +7,13 @@ import sys
 import stuck_base
 import stuck_math
 
-allnums  = '0123456789.'
+allnums  = '0123456789ABCDEF.'
 cmd_dict = {}
+
+def det_num_type(nm):
+    if '.' in nm: return float(nm)
+    elif any(x in nm for x in 'ABCDEF'): return int(nm,16)
+    else: return int(nm)
 
 def process(prog):
     stack = []
@@ -25,19 +30,19 @@ def process(prog):
     for char in prog:
         if char in stuck_math.CMDS and not str_lit_a:
             if num_lit_a == True:
-                stack += [float(num_lit)]
+                stack += [det_num_type(num_lit)]
                 num_lit = ''
                 num_lit_a = False
             stuck_math.CMDS[char](stack)
         elif char in stuck_base.CMDS and not str_lit_a:
             if num_lit_a == True:
-                stack += [float(num_lit)]
+                stack += [det_num_type(num_lit)]
                 num_lit = ''
                 num_lit_a = False
             stuck_base.CMDS[char](stack)
         elif char == ' ' and not str_lit_a:
             if num_lit_a == True:
-                stack += [float(num_lit)]
+                stack += [det_num_type(num_lit)]
                 num_lit = ''
                 num_lit_a = False
         elif char == '"':
@@ -46,14 +51,16 @@ def process(prog):
                 str_lit = ''
                 str_lit_a = False
             else:
+                if num_lit_a:
+                    stack += [det_num_type(num_lit)]
+                    num_lit = ''
+                    num_lit_a = False
                 str_lit_a = True
         elif char in allnums and not str_lit_a:
             num_lit_a = True
             num_lit  += char
         else:
             str_lit += char
-        if is_debug:
-            print 'Char:',char,'|','Stack:',`stack`
     if is_debug: print 'Stack:',`stack`
     print ''.join(map(str,stack))
         

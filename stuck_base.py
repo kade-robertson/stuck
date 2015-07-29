@@ -7,6 +7,14 @@ def inp_(s): s += [input()]
 def ins_(s): s += [raw_input()]
 def itk_(s): s += [eval(x) for x in raw_input().split('|')]
 def pls_(s): s.pop()
+def tca_(s): s += [map(ord,s.pop())]
+def tst_(s):
+    if type(s[-1]) is list:
+        s += [''.join(map(chr,s.pop()))]
+    else:
+        sr = ''
+        while s: sr += chr(s.pop(0)) 
+        s += [sr]
 def pal_(s):
     while len(s)>1:
         s.pop(0)
@@ -25,4 +33,5 @@ def swp_(s):
         
 CMDS = { 'i' : inp_, ';' : pls_, ',' : pal_,
          '~' : flt_, 's' : ins_, '?' : trn_,
-         'r' : itk_, ';' : swp_ }
+         'r' : itk_, ';' : swp_, 'c' : tca_,
+         'd' : tst_ }

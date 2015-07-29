@@ -5,6 +5,19 @@ CREATOR = 'Kade Robertson'
 VERSION = '1.1'
 DESCR   = 'Basic math functions plugin for the Stuck programming language.'
 
+def add_(s): s += [s.pop(-2)+s.pop()]
+def sub_(s): s += [s.pop(-2)-s.pop()]
+def mul_(s): s += [s.pop(-2)*s.pop()]
+def div_(s): s += [s.pop(-2)/s.pop()]
+def mod_(s): s += [s.pop(-2)%s.pop()]
+def pwr_(s): s += [s.pop(-2)**s.pop()]
+def gth_(s): s += [s.pop(-2)>s.pop()]
+def lth_(s): s += [s.pop(-2)<s.pop()]
+def eql_(s): s += [s.pop(-2)==s.pop()]
+def bsl_(s): s += [float(int(s.pop(-2))<<int(s.pop()))]
+def bsr_(s): s += [float(int(s.pop(-2))>>int(s.pop()))]
+def sqr_(s): s += [s.pop()**2]
+def sqt_(s): s += [s.pop()**0.5]
 def len_(s):
     if type(s[-1]) is list and len(s[-1]) == 4:
         k = s.pop()
@@ -29,4 +42,9 @@ def rmp_(s):
         while s: k *= s.pop()
     s += [k]
 
-CMDS = { '`' : len_, u'Σ': sum_, u'Π': rmp_ }
+CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
+         '/' : div_, '%' : mod_, '^' : pwr_,
+         '#' : sqr_, '\\': sqt_, '>' : gth_,
+         '<' : lth_, '=' : eql_, '{' : bsl_,
+         '}' : bsr_, '`' : len_, u'Σ': sum_,
+         u'Π': rmp_ }

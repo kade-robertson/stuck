@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import math
+
 NAME    = 'Stuck Math'
 CREATOR = 'Kade Robertson'
 VERSION = '1.1'
@@ -17,6 +19,8 @@ def bsl_(s): s += [float(int(s.pop(-2))<<int(s.pop()))]
 def bsr_(s): s += [float(int(s.pop(-2))>>int(s.pop()))]
 def sqr_(s): s += [s.pop()**2]
 def sqt_(s): s += [s.pop()**0.5]
+def fac_(s): s += [math.factorial(s.pop())]
+def spi_(s): s += [math.pi]
 def pwr_(s):
     n,x = s.pop(-2),s.pop()
     if int(n)==n and int(x)==x:
@@ -53,4 +57,4 @@ CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
          '#' : sqr_, '\\': sqt_, '>' : gth_,
          '<' : lth_, '=' : eql_, '{' : bsl_,
          '}' : bsr_, '`' : len_, u'Σ': sum_,
-         u'Π': rmp_ }
+         u'Π': rmp_, '!' : fac_, u'π': spi_, }

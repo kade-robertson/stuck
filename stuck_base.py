@@ -9,6 +9,7 @@ def itk_(s): s += [eval(x) for x in raw_input().split('|')]
 def pls_(s): s.pop()
 def tca_(s): s += [map(ord,s.pop())]
 def dup_(s): s += [s[-1]]
+def evl_(s): s += [eval(s.pop())]
 def rot_(s):
     t = s.pop()
     k = s
@@ -63,4 +64,4 @@ CMDS = { 'i' : inp_, ';' : pls_, ',' : pal_,
          '~' : flt_, 's' : ins_, '?' : trn_,
          'r' : itk_, ';' : swp_, 'c' : tca_,
          'd' : tst_, 'z' : zip_, 'Z' : zpl_,
-         '_' : dup_, '@' : rot_ }
+         '_' : dup_, '@' : rot_, 'e' : evl_ }

@@ -43,7 +43,7 @@ def process(prog):
                     stack += [det_num_type(num_lit)]
                     num_lit = ''
                     num_lit_a = False
-                plugins[plugin].CMDS[char](stack)
+                stack = plugins[plugin].CMDS[char](stack)
         if char == ' ' and not str_lit_a:
             if num_lit_a == True:
                 stack += [det_num_type(num_lit)]

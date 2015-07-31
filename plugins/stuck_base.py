@@ -1,7 +1,9 @@
 NAME    = 'Stuck Base'
 CREATOR = 'Kade Robertson'
-VERSION = '1.1'
+VERSION = '1.2'
 DESCR   = 'Base functions plugin for the Stuck programming language.'
+
+import pprint
 
 def inp_(s): s += [input()]
 def ins_(s): s += [raw_input()]
@@ -12,6 +14,21 @@ def dup_(s): s += [s[-1]]
 def evl_(s): s += [eval(s.pop())]
 def rge_(s): s += [range(s.pop())]
 def rgi_(s): s += [range(1,s.pop()+1)]
+def ppt_(s): pprint.pprint(s)
+def map_(s):
+    l = s.pop(-2)
+    la = s.pop()
+    if ':' not in la:
+        s += [map(eval(la),l)]
+    else:
+        s += [map(eval('lambda '+la),l)]
+def fil_(s):
+    l = s.pop(-2)
+    la = s.pop()
+    if ':' not in la:
+        s += [filter(eval(la),l)]
+    else:
+        s += [filter(eval('lambda '+la),l)]
 def rot_(s):
     t = s.pop()
     k = s
@@ -64,7 +81,8 @@ def swp_(s):
         
 CMDS = { 'i' : inp_, ';' : pls_, ',' : pal_,
          '~' : flt_, 's' : ins_, '?' : trn_,
-         'r' : itk_, ';' : swp_, 'c' : tca_,
+         't' : itk_, ';' : swp_, 'c' : tca_,
          'd' : tst_, 'z' : zip_, 'Z' : zpl_,
          '_' : dup_, '@' : rot_, 'e' : evl_,
-         'r' : rge_, 'R' : rgi_ }
+         'r' : rge_, 'R' : rgi_, 'p' : ppt_,
+         'm' : map_, 'f' : fil_,}

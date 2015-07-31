@@ -4,13 +4,12 @@ import math
 
 NAME    = 'Stuck Math'
 CREATOR = 'Kade Robertson'
-VERSION = '1.1'
+VERSION = '1.2'
 DESCR   = 'Basic math functions plugin for the Stuck programming language.'
 
 def add_(s): s += [s.pop(-2)+s.pop()]
 def sub_(s): s += [s.pop(-2)-s.pop()]
 def mul_(s): s += [s.pop(-2)*s.pop()]
-def div_(s): s += [s.pop(-2)/s.pop()]
 def mod_(s): s += [s.pop(-2)%s.pop()]
 def gth_(s): s += [s.pop(-2)>s.pop()]
 def lth_(s): s += [s.pop(-2)<s.pop()]
@@ -21,6 +20,8 @@ def sqr_(s): s += [s.pop()**2]
 def sqt_(s): s += [s.pop()**0.5]
 def fac_(s): s += [math.factorial(s.pop())]
 def spi_(s): s += [math.pi]
+def div_(s):
+    s += [(0.0+s.pop(-2))/(0.0+s.pop())]
 def pwr_(s):
     n,x = s.pop(-2),s.pop()
     if int(n)==n and int(x)==x:

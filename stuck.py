@@ -1,14 +1,22 @@
 NAME    = 'Stuck Interpreter'
 CREATOR = 'Kade Robertson'
-VERSION = '1.0'
+VERSION = '1.2'
 DESCR   = 'Interpreter for the Stuck programming language.'
 
+import imp
 import sys
-import stuck_base
-import stuck_math
+import glob
+from os.path import join,basename,splitext
 
 allnums  = '0123456789ABCDEF.'
 cmd_dict = {}
+
+def import_modules(dr):
+    return dict(_load(path) for path in glob.glob(join(dr,'[!_]*.py')))
+
+def _load(path):
+    name, ext = splitext(basename(path))
+    return name, imp.load_source(name, path)
 
 def det_num_type(nm):
     if '.' in nm: return float(nm)
@@ -22,25 +30,21 @@ def process(prog):
     str_lit   = ''
     str_lit_a = False
     is_debug  = False
+    plugins  = import_modules('plugins')
     if prog[-2:] == '-d':
         prog = prog[:-2]
         is_debug = True
     if prog[-1] in allnums:
         prog += ' '
     for char in prog:
-        if char in stuck_math.CMDS and not str_lit_a:
-            if num_lit_a == True:
-                stack += [det_num_type(num_lit)]
-                num_lit = ''
-                num_lit_a = False
-            stuck_math.CMDS[char](stack)
-        elif char in stuck_base.CMDS and not str_lit_a:
-            if num_lit_a == True:
-                stack += [det_num_type(num_lit)]
-                num_lit = ''
-                num_lit_a = False
-            stuck_base.CMDS[char](stack)
-        elif char == ' ' and not str_lit_a:
+        for plugin in plugins:
+            if char in plugins[plugin].CMDS and not str_lit_a:
+                if num_lit_a == True:
+                    stack += [det_num_type(num_lit)]
+                    num_lit = ''
+                    num_lit_a = False
+                plugins[plugin].CMDS[char](stack)
+        if char == ' ' and not str_lit_a:
             if num_lit_a == True:
                 stack += [det_num_type(num_lit)]
                 num_lit = ''
@@ -59,8 +63,9 @@ def process(prog):
         elif char in allnums and not str_lit_a:
             num_lit_a = True
             num_lit  += char
-        else:
+        elif str_lit_a:
             str_lit += char
+        if is_debug: print 'Char:',char,'|','Stack:',`stack`
     if is_debug: print 'Stack:',`stack`
     print ''.join(map(str,stack))
         
@@ -70,8 +75,11 @@ def main():
         while True:
             prog = raw_input("stuck > ")
             if prog == 'plugin':
-                for k in [stuck_base, stuck_math]:
-                    print '%s - Version %s - By %s\n   %s'%(k.NAME, k.VERSION, k.CREATOR, k.DESCR)
+                r=import_modules('plugins')
+                for k in r:
+                    print '%s - Version %s - By %s\n   %s'%(r[k].NAME, r[k].VERSION, r[k].CREATOR, r[k].DESCR)
+            elif prog == '':
+                print 'Hello, World!'
             else:
                 process(prog)
     else:

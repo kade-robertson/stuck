@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import math
+import itertools
 
 NAME    = 'Stuck Math'
 CREATOR = 'Kade Robertson'
@@ -53,6 +54,19 @@ def rmp_(s):
     else:
         while s: k *= s.pop()
     return s + [k]
+def ctp_(s):
+    k = s.pop()
+    if type(k) is int or (type(k) is float and int(k) == k):
+        ls = []
+        while k:
+            ls = [s.pop()] + ls
+            k -= 1
+        return s + [list(itertools.product(*ls))]
+    else:
+        r = s.pop()
+        print'Here'
+        return s + [list(itertools.product(r,k))]
+        
 
 CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
          '/' : div_, '%' : mod_, '^' : pwr_,
@@ -60,4 +74,4 @@ CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
          '<' : lth_, '=' : eql_, '{' : bsl_,
          '}' : bsr_, '`' : len_, u'Σ': sum_,
          u'Π': rmp_, '!' : fac_, u'π': spi_,
-         '|' : abs_ }
+         '|' : abs_, 'X' : ctp_ }

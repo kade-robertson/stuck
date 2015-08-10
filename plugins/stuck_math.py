@@ -21,6 +21,7 @@ def sqr_(s): return s + [s.pop()**2]
 def sqt_(s): return s + [s.pop()**0.5]
 def fac_(s): return s + [math.factorial(s.pop())]
 def spi_(s): return s + [math.pi]
+def eee_(s): return s + [math.e]
 def abs_(s): return s + [abs(s.pop())]
 def div_(s):
     return s + [(0.0+s.pop(-2))/(0.0+s.pop())]
@@ -74,4 +75,4 @@ CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
          '<' : lth_, '=' : eql_, '{' : bsl_,
          '}' : bsr_, '`' : len_, u'Σ': sum_,
          u'Π': rmp_, '!' : fac_, u'π': spi_,
-         '|' : abs_, 'X' : ctp_ }
+         '|' : abs_, 'X' : ctp_, 'e' : eee_ }

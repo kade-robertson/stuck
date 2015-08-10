@@ -14,7 +14,16 @@ def dup_(s): return s + [s[-1]]
 def evl_(s): return s + [eval(s.pop())]
 def rge_(s): return s + [range(s.pop())]
 def rgi_(s): return s + [range(1,s.pop()+1)]
-def ppt_(s): pprint.pprint(s[-1])
+def ppt_(s): print s[-1]; return []
+def wrp_(s): return [s]
+def pnl_(s): return s + ["\n"]
+def sjn_(s):
+    if type(s[-2]) is list:
+        j = s.pop()
+        return s + [j.join(map(str,s.pop()))]
+    else:
+        j = s.pop()
+        return [j.join(map(str,s))]
 def map_(s):
     l = s.pop(-2)
     la = s.pop()
@@ -78,9 +87,10 @@ def swp_(s):
     return s + [b] + [a]
         
 CMDS = { 'i' : inp_, '.' : pls_, ',' : pal_,
-         '~' : flt_, 's' : ins_, '?' : trn_,
+         ']' : flt_, 's' : ins_, '?' : trn_,
          't' : itk_, ';' : swp_, 'c' : tca_,
          'd' : tst_, 'z' : zip_, 'Z' : zpl_,
-         '_' : dup_, '@' : rot_, 'e' : evl_,
+         '_' : dup_, '@' : rot_, '~' : evl_,
          'r' : rge_, 'R' : rgi_, 'p' : ppt_,
-         'm' : map_, 'f' : fil_, 'u' : rbw_,}
+         'm' : map_, 'f' : fil_, 'u' : rbw_,
+         '[' : wrp_, 'j' : sjn_, 'N' : pnl_, }

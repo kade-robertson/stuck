@@ -23,8 +23,7 @@ def det_num_type(nm):
     elif any(x in nm for x in 'ABCDEF'): return int(nm,16)
     else: return int(nm)
 
-def process(prog):
-    stack = []
+def process(prog, stack=[], t=0):
     num_lit   = ''
     num_lit_a = False
     str_lit   = ''
@@ -44,6 +43,13 @@ def process(prog):
                     num_lit = ''
                     num_lit_a = False
                 stack = plugins[plugin].CMDS[char](stack)
+        if char == ':' and not str_lit_a:
+            if type(stack[-2]) is list:
+                _prog = stack.pop()
+                stack += [process(_prog,stack=[x],t=1) for x in stack.pop()]
+            else:
+                _prog = stack.pop()
+                stack = [process(_prog,stack=[x],t=1) for x in stack]
         if char == ' ' and not str_lit_a:
             if num_lit_a == True:
                 stack += [det_num_type(num_lit)]
@@ -67,7 +73,10 @@ def process(prog):
             str_lit += char
         if is_debug: print 'Char:',char,'|','Stack:',`stack`
     if is_debug: print 'Stack:',`stack`
-    print ''.join(map(str,stack))
+    if t == 0:
+        print ''.join(map(str,stack))
+    else:
+        return stack[0]
         
 
 def main():
@@ -81,7 +90,7 @@ def main():
             elif prog == '':
                 print 'Hello, World!'
             else:
-                process(prog)
+                process(prog, stack=[], t=0)
     else:
         if sys.argv[1].split('.')[-1] == 'stk':
             f = open(sys.argv[1], 'r')

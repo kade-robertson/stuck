@@ -23,6 +23,8 @@ def fac_(s): return s + [math.factorial(s.pop())]
 def spi_(s): return s + [math.pi]
 def eee_(s): return s + [math.e]
 def abs_(s): return s + [abs(s.pop())]
+def cil_(s): return s + [math.ceil(s.pop())]
+def flr_(s): return s + [math.floor(s.pop())]
 def div_(s):
     return s + [(0.0+s.pop(-2))/(0.0+s.pop())]
 def pwr_(s):
@@ -65,7 +67,6 @@ def ctp_(s):
         return s + [list(itertools.product(*ls))]
     else:
         r = s.pop()
-        print'Here'
         return s + [list(itertools.product(r,k))]
         
 
@@ -75,4 +76,5 @@ CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
          '<' : lth_, '=' : eql_, '{' : bsl_,
          '}' : bsr_, '`' : len_, u'Σ': sum_,
          u'Π': rmp_, '!' : fac_, u'π': spi_,
-         '|' : abs_, 'X' : ctp_, 'e' : eee_ }
+         '|' : abs_, 'X' : ctp_, 'e' : eee_,
+         '(' : cil_, ')' : flr_ }

@@ -8,7 +8,7 @@ import sys
 import glob
 from os.path import join,basename,splitext
 
-allnums  = '0123456789ABCDEF.'
+allnums = '0123456789.'
 cmd_dict = {}
 
 def import_modules(dr):
@@ -20,7 +20,6 @@ def _load(path):
 
 def det_num_type(nm):
     if '.' in nm: return float(nm)
-    elif any(x in nm for x in 'ABCDEF'): return int(nm,16)
     else: return int(nm)
 
 def process(prog, stack=[], t=0):
@@ -46,7 +45,7 @@ def process(prog, stack=[], t=0):
         if char == ':' and not str_lit_a:
             if type(stack[-2]) is list:
                 _prog = stack.pop()
-                stack += [process(_prog,stack=[x],t=1) for x in stack.pop()]
+                stack += [[process(_prog,stack=[x],t=1) for x in stack.pop()]]
             else:
                 _prog = stack.pop()
                 stack = [process(_prog,stack=[x],t=1) for x in stack]
@@ -57,7 +56,7 @@ def process(prog, stack=[], t=0):
                 num_lit_a = False
         elif char == '"':
             if str_lit_a:
-                stack += [str_lit]
+                stack += [str_lit.replace("''",'"')]
                 str_lit = ''
                 str_lit_a = False
             else:
@@ -74,7 +73,8 @@ def process(prog, stack=[], t=0):
         if is_debug: print 'Char:',char,'|','Stack:',`stack`
     if is_debug: print 'Stack:',`stack`
     if t == 0:
-        print ''.join(map(str,stack))
+        if not 'p' in prog:
+            print ''.join(map(str,stack))
     else:
         return stack[0]
         

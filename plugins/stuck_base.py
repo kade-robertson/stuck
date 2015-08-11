@@ -8,15 +8,25 @@ import pprint
 def inp_(s): return s + [input()]
 def ins_(s): return s + [raw_input()]
 def itk_(s): return s + [eval(x) for x in raw_input().split('|')]
-def pls_(s): s.pop()
+def pls_(s): s.pop(); return s
 def tca_(s): return s + [map(ord,s.pop())]
 def dup_(s): return s + [s[-1]]
 def evl_(s): return s + [eval(s.pop())]
 def rge_(s): return s + [range(s.pop())]
 def rgi_(s): return s + [range(1,s.pop()+1)]
-def ppt_(s): print s[-1]; return []
+def ppt_(s): print s[-1]; return s
 def wrp_(s): return [s]
 def pnl_(s): return s + ["\n"]
+def rpl_(s):
+    w = s.pop()
+    k = s.pop()
+    ss = s.pop()
+    return s + [ss.replace(k,w)]
+def lnn_(s):
+    if type(s[-1]) is list or type(s[-1]) is str:
+        return s + [len(s.pop())]
+    else:
+        return [len(s)]
 def sjn_(s):
     if type(s[-2]) is list:
         j = s.pop()
@@ -86,11 +96,12 @@ def swp_(s):
     a,b = s.pop(-2),s.pop()
     return s + [b] + [a]
         
-CMDS = { 'i' : inp_, '.' : pls_, ',' : pal_,
+CMDS = { 'i' : inp_, 'y' : pls_, ',' : pal_,
          ']' : flt_, 's' : ins_, '?' : trn_,
          't' : itk_, ';' : swp_, 'c' : tca_,
          'd' : tst_, 'z' : zip_, 'Z' : zpl_,
          '_' : dup_, '@' : rot_, '~' : evl_,
          'r' : rge_, 'R' : rgi_, 'p' : ppt_,
          'm' : map_, 'f' : fil_, 'u' : rbw_,
-         '[' : wrp_, 'j' : sjn_, 'N' : pnl_, }
+         '[' : wrp_, 'j' : sjn_, 'N' : pnl_,
+         'l' : lnn_, 'Q' : rpl_ }

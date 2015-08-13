@@ -120,6 +120,32 @@ def swp_(s):
     a,b = s.pop(-2),s.pop()
     return s + [b] + [a]
 def trs_(s): return s + [[list(x) for x in zip(*s.pop())]]
+def rle_(s):
+    v = s.pop()
+    count = 1
+    prev = ''
+    lst = []
+    for character in v:
+        if character != prev:
+            if prev:
+                entry = (count, prev)
+                lst.append(entry)
+            count = 1
+            prev = character
+        else:
+            count += 1
+    else:
+        entry = (count, character)
+        lst.append(entry)
+    return s + [[list(x) for x in lst]]
+def ule_(s):
+    l = s.pop()
+    q = ""
+    for character, count in l:
+        q += character * count
+    return s + [q]
+def srt_(s):
+    return s + [sorted(s.pop())]
         
 CMDS = { 'i' : inp_, 'y' : pls_, ',' : pal_,
          ']' : flt_, 's' : ins_, '?' : trn_,
@@ -131,4 +157,5 @@ CMDS = { 'i' : inp_, 'y' : pls_, ',' : pal_,
          '[' : wrp_, 'j' : sjn_, 'N' : pnl_,
          'l' : lnn_, 'Q' : rpl_, 'b' : bas_,
          'B' : bsc_, 'C' : cmp_, 'D' : dmp_,
-         'T' : trs_ }
+         'T' : trs_, 'o' : rle_, 'O' : ule_,
+         '$' : srt_ }

@@ -69,12 +69,12 @@ def ctp_(s):
         r = s.pop()
         return s + [list(itertools.product(r,k))]
 def prm_(s):
-    n = s.pop(-2)
     k = s.pop()
+    n = s.pop()
     return s + [math.factorial(n)/math.factorial(n-k)]
 def cmb_(s):
-    n = s.pop(-2)
     k = s.pop()
+    n = s.pop()
     return s + [math.factorial(n)/(math.factorial(k)*(math.factorial(n-k)))]
         
 

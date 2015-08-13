@@ -68,6 +68,14 @@ def ctp_(s):
     else:
         r = s.pop()
         return s + [list(itertools.product(r,k))]
+def prm_(s):
+    n = s.pop(-2)
+    k = s.pop()
+    return s + [math.factorial(n)/math.factorial(n-k)]
+def cmb_(s):
+    n = s.pop(-2)
+    k = s.pop()
+    return s + [math.factorial(n)/(math.factorial(k)*(math.factorial(n-k)))]
         
 
 CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
@@ -77,4 +85,5 @@ CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
          '}' : bsr_, '`' : len_, u'Σ': sum_,
          u'Π': rmp_, '!' : fac_, u'π': spi_,
          '|' : abs_, 'X' : ctp_, 'e' : eee_,
-         '(' : cil_, ')' : flr_ }
+         '(' : cil_, ')' : flr_, 'P' : prm_,
+         'M' : cmb_ }

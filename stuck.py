@@ -28,7 +28,8 @@ def process(prog, stack=[], t=0):
     str_lit   = ''
     str_lit_a = False
     is_debug  = False
-    plugins  = import_modules('plugins')
+    plugins   = import_modules('plugins')
+    imp_print = True 
     if prog[-2:] == '-d':
         prog = prog[:-2]
         is_debug = True
@@ -37,6 +38,8 @@ def process(prog, stack=[], t=0):
     for char in prog:
         for plugin in plugins:
             if char in plugins[plugin].CMDS and not str_lit_a:
+                if char == 'p':
+                    imp_print = False
                 if num_lit_a == True:
                     stack += [det_num_type(num_lit)]
                     num_lit = ''
@@ -73,7 +76,7 @@ def process(prog, stack=[], t=0):
         if is_debug: print 'Char:',char,'|','Stack:',`stack`
     if is_debug: print 'Stack:',`stack`
     if t == 0:
-        if not 'p' in prog:
+        if imp_print:
             print ''.join(map(str,stack))
     else:
         return stack[0]

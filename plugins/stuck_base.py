@@ -3,7 +3,10 @@ CREATOR = 'Kade Robertson'
 VERSION = '1.2'
 DESCR   = 'Base functions plugin for the Stuck programming language.'
 
-import pprint
+import zlib
+import base64
+
+base36 = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 def inp_(s): return s + [input()]
 def ins_(s): return s + [raw_input()]
@@ -17,6 +20,27 @@ def rgi_(s): return s + [range(1,s.pop()+1)]
 def ppt_(s): print s[-1]; return s
 def wrp_(s): return [s]
 def pnl_(s): return s + ["\n"]
+def bas_(s):
+    v = s.pop()
+    if type(v) is str:
+        return s + [base64.b64encode(v)]
+    elif type(v) is int:
+        t = s.pop()
+        o = ''
+        while t:
+            t,b = divmod(t,v)
+            o = base36[b] + o
+        return s + [int(o) if v == 10 else o]
+def bsc_(s):
+    v = s.pop()
+    if type(v) is str:
+        return s + [base64.b64decode(v)]
+def cmp_(s):
+    k = s.pop()
+    return s + [zlib.compress(k,9)]
+def dmp_(s):
+    k = s.pop()
+    return s + [zlib.decompress(k)]
 def rpl_(s):
     w = s.pop()
     k = s.pop()
@@ -95,6 +119,7 @@ def trn_(s):
 def swp_(s):
     a,b = s.pop(-2),s.pop()
     return s + [b] + [a]
+def trs_(s): return s + [[list(x) for x in zip(*s.pop())]]
         
 CMDS = { 'i' : inp_, 'y' : pls_, ',' : pal_,
          ']' : flt_, 's' : ins_, '?' : trn_,
@@ -104,4 +129,6 @@ CMDS = { 'i' : inp_, 'y' : pls_, ',' : pal_,
          'r' : rge_, 'R' : rgi_, 'p' : ppt_,
          'm' : map_, 'f' : fil_, 'u' : rbw_,
          '[' : wrp_, 'j' : sjn_, 'N' : pnl_,
-         'l' : lnn_, 'Q' : rpl_ }
+         'l' : lnn_, 'Q' : rpl_, 'b' : bas_,
+         'B' : bsc_, 'C' : cmp_, 'D' : dmp_,
+         'T' : trs_ }

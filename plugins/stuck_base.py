@@ -15,8 +15,17 @@ def pls_(s): s.pop(); return s
 def tca_(s): return s + [map(ord,s.pop())]
 def dup_(s): return s + [s[-1]]
 def evl_(s): return s + [eval(s.pop())]
-def rge_(s): return s + [range(s.pop())]
-def rgi_(s): return s + [range(1,s.pop()+1)]
+def rge_(s):
+    if type(s[-1]) is list and len(s[-1])==2:
+        return s + [range(*s.pop())]
+    else:
+        return s + [range(s.pop())]
+def rgi_(s):
+    if type(s[-1]) is list and len(s[-1])==2:
+        a1, a2 = s.pop()
+        return s + [range(a1, a2+1)]
+    else:
+        return s + [range(1,s.pop()+1)]
 def ppt_(s): print s[-1]; return s
 def wrp_(s): return [s]
 def pnl_(s): return s + ["\n"]

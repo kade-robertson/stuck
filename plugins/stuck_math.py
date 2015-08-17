@@ -76,6 +76,19 @@ def cmb_(s):
     k = s.pop()
     n = s.pop()
     return s + [math.factorial(n)/(math.factorial(k)*(math.factorial(n-k)))]
+def pri_(s):
+    def expand(n):
+        c = 1
+        for i in xrange(int(n**.5)+1):
+            c = c*(n-i)/(i+1)
+            yield c
+    v = s.pop()
+    if v == 2:
+        return s + [True]
+    for k in expand(v):
+        if k%v:
+            return s + [False]
+    return s + [True]
         
 
 CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
@@ -86,4 +99,4 @@ CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
          u'Π': rmp_, '!' : fac_, u'π': spi_,
          '|' : abs_, 'X' : ctp_, 'e' : eee_,
          '(' : cil_, ')' : flr_, 'P' : prm_,
-         'M' : cmb_ }
+         'M' : cmb_, 'v' : pri_ }

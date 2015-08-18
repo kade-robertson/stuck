@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 NAME    = 'Stuck Interpreter'
 CREATOR = 'Kade Robertson'
 VERSION = '1.2'
@@ -23,19 +25,25 @@ def det_num_type(nm):
     else: return int(nm)
 
 def process(prog, stack=[], t=0, nest=0):
+    saved_v   = []
     num_lit   = ''
     num_lit_a = False
     str_lit   = ''
     str_lit_a = False
     is_debug  = False
     plugins   = import_modules('plugins')
-    imp_print = True 
+    imp_print = True
+    char_mode = False
     if prog[-2:] == '-d':
         prog = prog[:-2]
         is_debug = True
     if prog[-1] in allnums:
         prog += ' '
     for char in prog:
+        if char_mode:
+            stack += [char]
+            char_mode = False
+            continue
         for plugin in plugins:
             if char in plugins[plugin].CMDS and not str_lit_a:
                 if char == 'p':
@@ -45,6 +53,26 @@ def process(prog, stack=[], t=0, nest=0):
                     num_lit = ''
                     num_lit_a = False
                 stack = plugins[plugin].CMDS[char](stack)
+        if char == "'" and not str_lit_a:
+            if num_lit_a == True:
+                stack += [det_num_type(num_lit)]
+                num_lit = ''
+                num_lit_a = False
+            char_mode = True
+        if char == 'g' and not str_lit_a:
+            if num_lit_a == True:
+                stack += [det_num_type(num_lit)]
+                num_lit = ''
+                num_lit_a = False
+            to_add = stack.pop()
+            saved_v += [to_add]
+        elif char == 'G' and not str_lit_a:
+            if num_lit_a == True:
+                stack += [det_num_type(num_lit)]
+                num_lit = ''
+                num_lit_a = False
+            idx = stack.pop()
+            stack += [saved_v[idx]]
         if char == ':' and not str_lit_a:
             if type(stack[-2]) is list:
                 _prog = stack.pop()
@@ -100,7 +128,14 @@ def main():
         if sys.argv[1].split('.')[-1] == 'stk':
             f = open(sys.argv[1], 'r')
             prog = f.read()
-            process(prog)
+            if prog == 'plugin':
+                r=import_modules('plugins')
+                for k in r:
+                    print '%s - Version %s - By %s\n   %s'%(r[k].NAME, r[k].VERSION, r[k].CREATOR, r[k].DESCR)
+            elif prog == '':
+                print 'Hello, World!'
+            else:
+                process(prog, stack=[], t=0, nest=0)
         else:
             print 'Usage: python',__file__.split('/')[-1],'program.stk'
 

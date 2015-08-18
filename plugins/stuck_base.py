@@ -155,6 +155,17 @@ def ule_(s):
     return s + [q]
 def srt_(s):
     return s + [sorted(s.pop())]
+def get_(s):
+    k = s.pop()
+    l = s.pop()
+    return s + [l[k]]
+def fnd_(s):
+    k = s.pop()
+    l = s.pop()
+    if k in l:
+        return s + [l.index(k)]
+    else:
+        return s + [-1]
         
 CMDS = { 'i' : inp_, 'y' : pls_, ',' : pal_,
          ']' : flt_, 's' : ins_, '?' : trn_,
@@ -167,4 +178,4 @@ CMDS = { 'i' : inp_, 'y' : pls_, ',' : pal_,
          'l' : lnn_, 'Q' : rpl_, 'b' : bas_,
          'B' : bsc_, 'C' : cmp_, 'D' : dmp_,
          'T' : trs_, 'o' : rle_, 'O' : ule_,
-         '$' : srt_ }
+         '$' : srt_, '&' : get_, 'I' : fnd_ }

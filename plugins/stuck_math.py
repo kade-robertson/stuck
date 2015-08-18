@@ -85,7 +85,7 @@ def pri_(s):
     v = s.pop()
     if v == 2:
         return s + [True]
-    if v == 1:
+    if v <= 1:
         return s + [False]
     for k in expand(v):
         if k%v:

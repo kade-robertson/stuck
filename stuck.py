@@ -64,7 +64,7 @@ def process(prog, stack=[], t=0, nest=0):
                 stack += [det_num_type(num_lit)]
                 num_lit = ''
                 num_lit_a = False
-            saved_v += [s[-1]]
+            saved_v += [stack[-1]]
         elif char == 'G' and not str_lit_a:
             if num_lit_a == True:
                 stack += [det_num_type(num_lit)]

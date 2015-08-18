@@ -166,6 +166,10 @@ def fnd_(s):
         return s + [l.index(k)]
     else:
         return s + [-1]
+def cln_(s):
+    l = s.pop()
+    l = [x for x in l if x]
+    return s + [l]
         
 CMDS = { 'i' : inp_, 'y' : pls_, ',' : pal_,
          ']' : flt_, 's' : ins_, '?' : trn_,
@@ -178,4 +182,5 @@ CMDS = { 'i' : inp_, 'y' : pls_, ',' : pal_,
          'l' : lnn_, 'Q' : rpl_, 'b' : bas_,
          'B' : bsc_, 'C' : cmp_, 'D' : dmp_,
          'T' : trs_, 'o' : rle_, 'O' : ule_,
-         '$' : srt_, '&' : get_, 'I' : fnd_ }
+         '$' : srt_, '&' : get_, 'I' : fnd_,
+         'U' : cln_ }

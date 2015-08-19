@@ -61,12 +61,15 @@ def lnn_(s):
     else:
         return [len(s)]
 def sjn_(s):
-    if type(s[-2]) is list:
-        j = s.pop()
-        return s + [j.join(map(str,s.pop()))]
-    else:
-        j = s.pop()
-        return [j.join(map(str,s))]
+    j = s.pop()
+    if type(j) is list:
+        return s + [''.join(map(str,j))]
+    elif type(j) is str:
+        if type(s[-2]) is list:
+            k = s.pop()
+            return s + [j.join(map(str,k))]
+        else:
+            return [j.join(map(str,s))]
 def map_(s):
     l = s.pop(-2)
     la = s.pop()
@@ -154,7 +157,11 @@ def ule_(s):
         q += character * count
     return s + [q]
 def srt_(s):
-    return s + [sorted(s.pop())]
+    k = s.pop()
+    if type(k) is list or type(k) is tuple:
+        return s + [sorted(k)]
+    elif type(k) is str:
+        return s + [''.join(sorted(k))]
 def get_(s):
     k = s.pop()
     l = s.pop()

@@ -65,7 +65,7 @@ def sjn_(s):
     if type(j) is list:
         return s + [''.join(map(str,j))]
     elif type(j) is str:
-        if type(s[-2]) is list:
+        if type(s[-1]) is list:
             k = s.pop()
             return s + [j.join(map(str,k))]
         else:
@@ -78,12 +78,20 @@ def map_(s):
     else:
         return s + [map(eval('lambda '+la),l)]
 def fil_(s):
-    l = s.pop(-2)
-    la = s.pop()
-    if ':' not in la:
-        return s + [filter(eval(la),l)]
-    else:
-        return s + [filter(eval('lambda '+la),l)]
+    k = s.pop()
+    if type(k) is list:
+        if type(s[-1]) is list:
+            v = s.pop()
+            o = []
+            for a,b in zip(v,k):
+                if b: o += [a]
+            return s + [o]
+    elif type(k) is str:
+        l = s.pop()
+        if ':' not in l:
+            return s + [filter(eval(k),l)]
+        else:
+            return s + [filter(eval('lambda '+k),l)]
 def rot_(s):
     return [s[-1]]+s[:-1]
 def rbw_(s):
@@ -177,6 +185,17 @@ def cln_(s):
     l = s.pop()
     l = [x for x in l if x]
     return s + [l]
+def sct_(s):
+    n = s.pop()
+    l = s.pop()
+    v = [l[i:i+n] for i in xrange(0,len(l),n)]
+    return s + [v]
+def rev_(s):
+    k = s.pop()
+    return s + [k[::-1]]
+def enm_(s):
+    k = s.pop()
+    return s + [list(enumerate(k))]
         
 CMDS = { 'i' : inp_, 'y' : pls_, ',' : pal_,
          ']' : flt_, 's' : ins_, '?' : trn_,
@@ -190,4 +209,5 @@ CMDS = { 'i' : inp_, 'y' : pls_, ',' : pal_,
          'B' : bsc_, 'C' : cmp_, 'D' : dmp_,
          'T' : trs_, 'o' : rle_, 'O' : ule_,
          '$' : srt_, '&' : get_, 'I' : fnd_,
-         'U' : cln_ }
+         'U' : cln_, 'K' : sct_, 'Y' : rev_,
+         'E' : enm_ }

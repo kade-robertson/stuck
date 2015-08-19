@@ -8,27 +8,8 @@ CREATOR = 'Kade Robertson'
 VERSION = '1.2'
 DESCR   = 'Basic math functions plugin for the Stuck programming language.'
 
-def add_(s):
-    k = s.pop()
-    if type(k) is list:
-        return s + [sum(k)]
-    else:
-        return s + [s.pop()+k]
-def sub_(s):
-    k = s.pop()
-    if type(k) is list:
-        if type(s[-1]) is list:
-            v = s.pop()
-            o = []
-            for a,b in zip(v,k):
-                if b: o += [a]
-            return s + [o]
-        else:
-            d=0
-            while k: d-=k.pop(0)
-            return s + [d]
-    else:
-        return s + [s.pop()-k]
+def add_(s): return s + [s.pop(-2)+s.pop()]
+def sub_(s): return s + [s.pop(-2)-s.pop()]
 def mul_(s): return s + [s.pop(-2)*s.pop()]
 def mod_(s): return s + [s.pop(-2)%s.pop()]
 def gth_(s): return s + [s.pop(-2)>s.pop()]

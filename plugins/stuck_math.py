@@ -103,6 +103,8 @@ def pri_(s):
         if k%v:
             return s + [False]
     return s + [True]
+def rnn_(s):
+    return s + [int(round(s.pop()))]
         
 
 CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
@@ -113,4 +115,4 @@ CMDS = { '+' : add_, '-' : sub_, '*' : mul_,
          u'Π': rmp_, '!' : fac_, u'π': spi_,
          '|' : abs_, 'X' : ctp_, 'e' : eee_,
          '(' : cil_, ')' : flr_, 'P' : prm_,
-         'M' : cmb_, 'v' : pri_ }
+         'M' : cmb_, 'v' : pri_, 'F' : rnn_, }

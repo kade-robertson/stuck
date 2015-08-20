@@ -77,10 +77,23 @@ def process(prog, stack=[], t=0, nest=0):
                 _prog = stack.pop()
                 if 'p' in _prog:
                     imp_print = False
-                stack += [[process(_prog,stack=[x],t=1,nest=nest+1) for x in stack.pop()]]
+                stack += [[process(_prog,stack=[x],t=2,nest=nest+1) for x in stack.pop()]]
             else:
                 _prog = stack.pop()
-                stack = [process(_prog,stack=[x],t=1,nest=nest+1) for x in stack]
+                stack = [process(_prog,stack=[x],t=2,nest=nest+1) for x in stack]
+        if char == 'V' and not str_lit_a:
+            if num_lit_a == True:
+                stack += [det_num_type(num_lit)]
+                num_lit = ''
+                num_lit_a = False
+            times = stack.pop()
+            oper = stack.pop()
+            tomod = stack
+            if 'p' in oper:
+                imp_print = False
+            for i in range(times):
+                tomod = process(oper,stack=tomod,t=1,nest=nest+1)
+            stack = tomod
         if char == ' ' and not str_lit_a:
             if num_lit_a == True:
                 stack += [det_num_type(num_lit)]
@@ -108,7 +121,10 @@ def process(prog, stack=[], t=0, nest=0):
         if imp_print:
             print ''.join(map(str,stack))
     else:
-        return stack[0]
+        if t == 1:
+            return stack
+        elif t == 2:
+            return stack[0]
         
 
 def main():

@@ -94,6 +94,13 @@ def process(prog, stack=[], t=0, nest=0):
             for i in range(times):
                 tomod = process(oper,stack=tomod,t=1,nest=nest+1)
             stack = tomod
+        if char == 'h' and not str_lit_a:
+            toeval = stack.pop()
+            condition = stack.pop()
+            value = stack.pop()
+            while process(condition,stack=[value],t=2,nest=nest+1):
+                value = process(toeval,stack=[value],t=2,nest=nest+1)
+            stack += [value]
         if char == ' ' and not str_lit_a:
             if num_lit_a == True:
                 stack += [det_num_type(num_lit)]

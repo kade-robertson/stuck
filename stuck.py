@@ -98,6 +98,8 @@ def process(prog, stack=[], t=0, nest=0):
             toeval = stack.pop()
             condition = stack.pop()
             value = stack.pop()
+            if 'p' in toeval or 'p' in condition:
+                imp_print = False
             while process(condition,stack=[value],t=2,nest=nest+1):
                 value = process(toeval,stack=[value],t=2,nest=nest+1)
             stack += [value]

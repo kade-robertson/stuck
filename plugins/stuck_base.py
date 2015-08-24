@@ -7,6 +7,7 @@ import zlib
 import base64
 
 base36 = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 def inp_(s): return s + [input()]
 def ins_(s): return s + [raw_input()]
@@ -196,6 +197,26 @@ def rev_(s):
 def enm_(s):
     k = s.pop()
     return s + [list(enumerate(k))]
+def alp_(s):
+    return s + [alpha]
+def isa_(s):
+    k = s.pop()
+    if type(k) is str:
+        return s + [''.join(filter(str.isalpha,k))]
+    elif type(k) is list:
+        return s + [filter(str.isalpha,k)]
+def low_(s):
+    k = s.pop()
+    if type(k) is str:
+        return s + [s.pop().islower()]
+    elif type(k) is int:
+        return s + [97 <= k <= 122]
+def upp_(s):
+    k = s.pop()
+    if type(k) is str:
+        return s + [s.pop().isupper()]
+    elif type(k) is int:
+        return s + [65 <= k <= 90]
         
 CMDS = { 'i' : inp_, 'y' : pls_, ',' : pal_,
          ']' : flt_, 's' : ins_, '?' : trn_,
@@ -210,4 +231,5 @@ CMDS = { 'i' : inp_, 'y' : pls_, ',' : pal_,
          'T' : trs_, 'o' : rle_, 'O' : ule_,
          '$' : srt_, '&' : get_, 'I' : fnd_,
          'U' : cln_, 'K' : sct_, 'Y' : rev_,
-         'E' : enm_ }
+         'E' : enm_, 'A' : alp_, 'a' : isa_,
+         'w' : low_, 'W' : upp_ }

@@ -24,7 +24,7 @@ def det_num_type(nm):
     if '.' in nm: return float(nm)
     else: return int(nm)
 
-def process(prog, stack=[], t=0, nest=0):
+def process(prog, stack=[], saved_v=[], t=0, nest=0):
     saved_v   = []
     num_lit   = ''
     num_lit_a = False
@@ -77,10 +77,10 @@ def process(prog, stack=[], t=0, nest=0):
                 _prog = stack.pop()
                 if 'p' in _prog:
                     imp_print = False
-                stack += [[process(_prog,stack=[x],t=2,nest=nest+1) for x in stack.pop()]]
+                stack += [[process(_prog,stack=[x],saved_v=saved_v,t=2,nest=nest+1) for x in stack.pop()]]
             else:
                 _prog = stack.pop()
-                stack = [process(_prog,stack=[x],t=2,nest=nest+1) for x in stack]
+                stack = [process(_prog,stack=[x],saved_v=saved_v,t=2,nest=nest+1) for x in stack]
         if char == 'V' and not str_lit_a:
             if num_lit_a == True:
                 stack += [det_num_type(num_lit)]
@@ -92,7 +92,7 @@ def process(prog, stack=[], t=0, nest=0):
             if 'p' in oper:
                 imp_print = False
             for i in range(times):
-                tomod = process(oper,stack=tomod,t=1,nest=nest+1)
+                tomod = process(oper,stack=tomod,saved_v=saved_v,t=1,nest=nest+1)
             stack = tomod
         if char == 'h' and not str_lit_a:
             toeval = stack.pop()
@@ -100,8 +100,8 @@ def process(prog, stack=[], t=0, nest=0):
             value = stack.pop()
             if 'p' in toeval or 'p' in condition:
                 imp_print = False
-            while process(condition,stack=[value],t=2,nest=nest+1):
-                value = process(toeval,stack=[value],t=2,nest=nest+1)
+            while process(condition,stack=[value],saved_v=saved_v,t=2,nest=nest+1):
+                value = process(toeval,stack=[value],saved_v=saved_v,t=2,nest=nest+1)
             stack += [value]
         if char == ' ' and not str_lit_a:
             if num_lit_a == True:
